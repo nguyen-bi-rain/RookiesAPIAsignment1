@@ -14,7 +14,7 @@ namespace Application.DTOs.Person
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
-
+        [Required(ErrorMessage = "Gender is required")]
         public GenderType Gender { get; set; }
         [Required(ErrorMessage = "Birth Place is required")]
         public string BirthPlace { get; set; }
