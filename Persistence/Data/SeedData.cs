@@ -1,5 +1,5 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,7 +35,28 @@ public static class SeedData
                     UpdatedAt = DateTime.Now
                 }
             );
-
+            context.Persons.AddRange(
+                new Person("John", "Doe", new DateTime(1990, 1, 1),GenderType.Female,"New York")
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Person("Nguyen", "Vu", new DateTime(2003, 1, 1),GenderType.Male,"Quang Ninh")
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Person("Vu", "The", new DateTime(1990, 1, 1),GenderType.Female,"Ha Noi")
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Person("Tran", "Quan", new DateTime(1990, 1, 1),GenderType.Female,"Da Nang")
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                }
+            );
             context.SaveChanges();
         }
     }

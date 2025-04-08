@@ -11,6 +11,7 @@ namespace Application
         {
             // Add application services here
             services.AddScoped<ITodoService,TodoService>();
+            services.AddScoped<IPersonService, PersonService>();
             services.AddAutoMapper(typeof(MappingProfile));
             return services;
         }

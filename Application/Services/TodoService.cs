@@ -33,6 +33,7 @@ namespace Application.Services
         {
             
             var model = _mapper.Map<Todo>(createTaskDto);
+            model.Id = Guid.NewGuid(); // Ensure a new ID is generated for the new task
             await _todoRepository.AddAsync(model);
             return _mapper.Map<TodoDTO>(createTaskDto);
         }

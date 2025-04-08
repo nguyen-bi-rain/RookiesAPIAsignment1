@@ -47,8 +47,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        // Handle exceptions
-        throw;
+        throw new Exception("An error occurred while seeding the database.", ex);
     }
 }
 // Configure the HTTP request pipeline.
