@@ -26,3 +26,7 @@ dotnet build
 ```bash
 dotnet run
 ```
+## Update 
+clear unusing library
+update code for assignment day 2
+
