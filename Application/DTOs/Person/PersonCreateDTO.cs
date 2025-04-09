@@ -15,7 +15,7 @@ namespace Application.DTOs.Person
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         [Required(ErrorMessage = "Gender is required")]
-        [EnumDataType(typeof(GenderType), ErrorMessage = "Invalid gender type Gender must be Male, Female, Other")]
+        [EnumDataType(typeof(GenderType), ErrorMessage = "Invalid gender type Gender must be Male(0), Female(1), Other(2)")]
         public GenderType Gender { get; set; }
         [Required(ErrorMessage = "Birth Place is required")]
         public string BirthPlace { get; set; }

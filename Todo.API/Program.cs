@@ -1,6 +1,10 @@
 using Application;
+using Application.Validator;
 using Domain.Shared;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 using Persistence.Data;
@@ -17,6 +21,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<PersonCreateValidator>();
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -56,7 +62,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        var exception = exceptionHandlerPathFeature?.Error;
 
+        if (exception is ValidationException validationException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.ContentType = "application/json";
+
+            var errors = validationException.Errors
+                .Select(e => new { e.PropertyName, e.ErrorMessage });
+
+            await context.Response.WriteAsJsonAsync(new { errors });
+        }
+    });
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
